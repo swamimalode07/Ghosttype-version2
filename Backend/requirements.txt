@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+pydantic
+supabase
+postgrest
+websockets
+python-dotenv
+requests
