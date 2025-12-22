@@ -5,6 +5,9 @@ import { generate } from "random-words";
 const TypingPage = () => {
   const [words, setWords] = useState("");
   const [input, setInput] = useState("");
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [wpm, setWpm] = useState(0);
+
 
   useEffect(() => {
     setWords(generate({ exactly: 30, join: " " }));
@@ -20,7 +23,22 @@ const TypingPage = () => {
       if (e.key.length !== 1) return;
       if (input.length >= words.length) return;
 
-      setInput((prev) => prev + e.key);
+      if(!startTime){
+        setStartTime(Date.now())
+      } 
+      const newInput = input + e.key;
+      setInput(newInput);
+
+      if(startTime){  
+        const elapsedMiliSecs=Date.now()-startTime;
+        const elapsedMins=elapsedMiliSecs/60000
+        const charsTyped=newInput.length
+
+        const finalWPM=Math.round((charsTyped/5)/elapsedMins)
+        
+        setWpm(finalWPM)
+      }
+
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -28,21 +46,21 @@ const TypingPage = () => {
   }, [input, words]);
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 text-center">
-      <div className="text-lg leading-relaxed font-mono border p-4 rounded">
+    <div className="max-w-4xl mx-auto mt-5  text-center ">
+      {/* <div>{wpm}</div> */}
+      <div className="text-2xl leading-relaxed font-mono  p-4 rounded">
         {words.split("").map((char, index) => {
           const typedChar = input[index];
 
           let className = "text-gray-400";
           if (typedChar !== undefined) {
-            className =
-              typedChar === char ? "text-green-500" : "text-red-500";
+            className = typedChar === char ? "text-green-500" : "text-red-500";
           }
 
           return (
             <span key={index} className="relative text-center">
               {index === input.length && (
-                <span className="absolute -left-[2px] top-0 w-[2px] h-[1.2em] bg-black animate-pulse text-center" />
+                <span className="absolute -left-[2px] top-0 w-[2px] h-[1.2em] bg-red-300 animate-pulse text-center" />
               )}
               <span className={className} >{char}</span>
             </span>

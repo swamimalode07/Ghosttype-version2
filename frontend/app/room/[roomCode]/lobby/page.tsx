@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import PlayerList from "@/components/lobby/PlayerList";
+import { useRouter } from "next/navigation";
 
 type GameStatus = "waiting" | "starting" | "playing";
 
 export default function Lobby() {
   const params = useParams();
   const roomCode = params.roomCode as string;
+  const router=useRouter()
 
   const socketRef = useRef<WebSocket | null>(null);
 
@@ -65,6 +67,9 @@ export default function Lobby() {
 
         if (data.value === "GO") {
           setStatus("playing");
+          setTimeout(() => {
+            router.push(`/room/${roomCode}/race`)
+          }, 100);
         }
       }
     };
@@ -84,7 +89,7 @@ export default function Lobby() {
 
 
   function handleStartGame() {
-    if (!socketRef.current || !username) return;
+    if (!socketRef.current || !username)  return;
 
     socketRef.current.send(
       JSON.stringify({
@@ -132,8 +137,16 @@ export default function Lobby() {
 
 
       {username === creator ? (
-        <Button className="w-full mt-4" onClick={handleStartGame}>
-          Start Game
+        <Button className="w-full mt-4" onClick={handleStartGame} disabled={players.length<2  }>
+          {players.length<2 ? (
+            <div>
+              Waiting for more players to join
+            </div>
+          ):(
+            <div>
+              Start Game
+            </div>
+          )}
         </Button>
       ) : (
         <div className="text-center text-sm text-muted-foreground mt-4">
