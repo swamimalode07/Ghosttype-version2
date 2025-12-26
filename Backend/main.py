@@ -75,7 +75,8 @@ async def websocket_endpoint(websocket: WebSocket, room_code: str):
             "creator": None,
             "players": [],
             "connections": [],
-            "usernames": {}
+            "usernames": {},
+            "words": ""
         }
 
     room = active_rooms[room_code]
@@ -138,6 +139,26 @@ async def websocket_endpoint(websocket: WebSocket, room_code: str):
                         "message": "Only the creator can start the race"
                     })
                     continue
+
+                # Generate words once for the room
+                import random
+                words_list = [
+                    "the", "quick", "brown", "fox", "jumps", "over", "lazy", "dog",
+                    "python", "javascript", "typescript", "react", "fastapi", "code",
+                    "programming", "developer", "software", "computer", "keyboard", "typing",
+                    "speed", "accuracy", "race", "challenge", "test", "practice", "skill",
+                    "learn", "improve", "performance", "compete", "victory", "success"
+                ]
+                random.shuffle(words_list)
+                room_words = " ".join(words_list[:30])
+                room["words"] = room_words
+
+                # Send words to all players
+                for conn in room["connections"]:
+                    await conn.send_json({
+                        "type": "words",
+                        "words": room_words
+                    })
 
                 # Notify start
                 for conn in room["connections"]:

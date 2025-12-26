@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
-import { generate } from "random-words";
 
 interface PlayerState {
   [username: string]: {
@@ -29,6 +28,12 @@ const TypingPage = () => {
     const storedUsername = sessionStorage.getItem(`username_${roomCode}`);
     if (storedUsername) {
       setUsername(storedUsername);
+    }
+
+    // Also get words from sessionStorage if available
+    const storedWords = sessionStorage.getItem(`words_${roomCode}`);
+    if (storedWords) {
+      setWords(storedWords);
     }
   }, [roomCode]);
 
@@ -71,6 +76,11 @@ const TypingPage = () => {
       if (data.type === "players_update") {
         setCreator(data.creator);
       }
+
+      if (data.type === "words") {
+        // Set words from server
+        setWords(data.words);
+      }
     };
 
     ws.onerror = (error) => {
@@ -91,7 +101,8 @@ const TypingPage = () => {
 
   // Generate words
   useEffect(() => {
-    setWords(generate({ exactly: 30, join: " " }));
+    // Words will be received from server via WebSocket when race starts
+    // No need to generate locally
   }, []);
 
   // Handle typing

@@ -63,6 +63,11 @@ export default function Lobby() {
         setStatus("waiting");
       }
 
+      if (data.type === "words") {
+        // Store words in sessionStorage for race page
+        sessionStorage.setItem(`words_${roomCode}`, data.words);
+      }
+
       if (data.type === "start_race") {
         setStatus("starting");
       }
