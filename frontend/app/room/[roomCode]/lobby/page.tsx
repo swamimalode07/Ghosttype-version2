@@ -30,7 +30,11 @@ export default function Lobby() {
     setMounted(true);
     const storedUsername = localStorage.getItem("username");
     setUsername(storedUsername);
-  }, []);
+    // Also store in sessionStorage for the race page
+    if (storedUsername) {
+      sessionStorage.setItem(`username_${roomCode}`, storedUsername);
+    }
+  }, [roomCode]);
 
   useEffect(() => {
     if (!username) return;

@@ -160,6 +160,13 @@ async def websocket_endpoint(websocket: WebSocket, room_code: str):
                         "value": "GO"
                     })
 
+            # keystroke event
+            elif event_type == "keystroke":
+                # Broadcast to all other connections
+                for conn in room["connections"]:
+                    if conn != websocket:
+                        await conn.send_json(data)
+
             # other events
             else:
                 for conn in room["connections"]:
