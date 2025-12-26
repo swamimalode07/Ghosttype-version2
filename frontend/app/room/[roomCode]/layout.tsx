@@ -6,7 +6,7 @@ export default function LobbyLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen w-full max-w-3xl mx-auto bg-background text-foreground mt-20">
       {children}
     </div>
   );

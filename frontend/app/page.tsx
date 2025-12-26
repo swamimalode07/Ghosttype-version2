@@ -36,7 +36,7 @@ export default function Home() {
     const roomCode=data.room_code
     router.push(`/room/${roomCode}/lobby`)
   }
-
+  
   async function handleJoinRoom(){
     if(!joinUsername){
       alert("Please enter username")

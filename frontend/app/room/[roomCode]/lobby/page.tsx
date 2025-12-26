@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import PlayerList from "@/components/lobby/PlayerList";
 import { useRouter } from "next/navigation";
+import CodeBlock from "@/components/CopyButton/page";
 
 type GameStatus = "waiting" | "starting" | "playing";
 
@@ -102,11 +103,11 @@ export default function Lobby() {
   if (!mounted) return null;
 
   return (
-    <div className="max-w-2xl mx-auto flex flex-col gap-5 p-6">
+    <div className="max-w-6xl mx-auto flex flex-col gap-5 p-6">
 
-      <div className="flex items-center justify-between rounded-md border px-4 py-2">
-        <div className="text-sm font-medium">
-          Room Code: <span className="font-mono">{roomCode}</span>
+      <div className="flex w-full items-center justify-between rounded-md border px-4 py-2">
+        <div className="text-sm font-medium flex flex-row items-center gap-4">
+          Room Code: <span className="font-mono"><CodeBlock code={roomCode} /></span>
         </div>
         <button className="text-sm text-red-500 hover:underline">
           Leave
