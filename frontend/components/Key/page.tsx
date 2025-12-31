@@ -10,8 +10,8 @@ interface KeyProps {
 
 const Key: React.FC<KeyProps> = ({ label, variant = "normal", onClick }) => {
   const widthMap: Record<KeyVariant, string> = {
-    normal: "w-14",
-    shift: "w-28",   // exactly 2 × normal
+    normal: "w-15",
+    shift: "w-28",
     tab: "w-20",
     space: "w-64",
   };
@@ -20,7 +20,7 @@ const Key: React.FC<KeyProps> = ({ label, variant = "normal", onClick }) => {
     <div
       className={`
         ${widthMap[variant]}
-        h-14
+        h-13
         rounded-sm
         bg-gradient-to-b from-[#5C5C5C] to-[#171717]
         p-[1px]
