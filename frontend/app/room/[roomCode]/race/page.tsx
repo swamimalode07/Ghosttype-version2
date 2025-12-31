@@ -23,21 +23,20 @@ const TypingPage = () => {
   const [playerStates, setPlayerStates] = useState<PlayerState>({});
   const [creator, setCreator] = useState<string | null>(null);
 
-  // Get username and setup WebSocket
+
   useEffect(() => {
     const storedUsername = sessionStorage.getItem(`username_${roomCode}`);
     if (storedUsername) {
       setUsername(storedUsername);
     }
 
-    // Also get words from sessionStorage if available
     const storedWords = sessionStorage.getItem(`words_${roomCode}`);
     if (storedWords) {
       setWords(storedWords);
     }
   }, [roomCode]);
 
-  // Setup WebSocket connection
+ 
   useEffect(() => {
     if (!username) return;
 
@@ -63,7 +62,6 @@ const TypingPage = () => {
       console.log("Received:", data);
 
       if (data.type === "keystroke") {
-        // Update opponent progress
         setPlayerStates((prev) => ({
           ...prev,
           [data.username]: {
@@ -78,7 +76,6 @@ const TypingPage = () => {
       }
 
       if (data.type === "words") {
-        // Set words from server
         setWords(data.words);
       }
     };
@@ -99,7 +96,7 @@ const TypingPage = () => {
     };
   }, [username, roomCode]);
 
-  // Generate words
+
   useEffect(() => {
     // Words will be received from server via WebSocket when race starts
     // No need to generate locally
@@ -123,7 +120,6 @@ const TypingPage = () => {
       const newInput = input + e.key;
       setInput(newInput);
 
-      // Calculate WPM
       if (startTime) {
         const elapsedMiliSecs = Date.now() - startTime;
         const elapsedMins = elapsedMiliSecs / 60000;
@@ -132,7 +128,6 @@ const TypingPage = () => {
         setWpm(finalWPM);
       }
 
-      // Send keystroke via WebSocket
       if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
         socketRef.current.send(
           JSON.stringify({
@@ -149,7 +144,6 @@ const TypingPage = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [input, words, startTime, username]);
 
-  // Render cursor for a player at a specific position
   const renderCursor = (playerName: string, position: number, isCreator: boolean) => {
     const charElement = charsRef.current[position];
     if (!charElement) return null;

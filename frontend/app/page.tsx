@@ -71,7 +71,7 @@ export default function Home() {
       <div className="grid grid-cols-2 text-center ">
         <div className="">
           <div className="min-h-screen flex items-center justify-center">
-            <div className="max-w-md w-full flex flex-col items-center gap-4 border-2 border-red-500 p-16 rounded-2xl">
+            <div className="max-w-md w-full flex flex-col items-center gap-4 border-2 border-grey-500 p-16 rounded-2xl">
               <h1>Create room</h1>
               <Input placeholder="Enter username" value={username} onChange={(e)=>setUsername(e.target.value)}/>
               <Button className="w-full" onClick={handlecreateRoom}>
@@ -83,7 +83,7 @@ export default function Home() {
         <div>
           <div className="">
               <div className="min-h-screen flex items-center justify-center">
-            <div className="max-w-md w-full flex flex-col items-center gap-4 border-2 border-red-500 p-16 rounded-2xl">
+            <div className="max-w-md w-full flex flex-col items-center gap-4 border-2 border-grey-500 p-16 rounded-2xl">
               <h1>Join room</h1>
               <Input placeholder="Username" value={joinUsername} onChange={(e)=>setJoinUsername(e.target.value)}/>
               <Input placeholder="Enter room code" value={roomCode} onChange={(e)=>setRoomCode(e.target.value)}/>
