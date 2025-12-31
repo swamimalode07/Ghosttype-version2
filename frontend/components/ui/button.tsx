@@ -19,6 +19,7 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        redbutton:"bg-gradient-to-b from-red-700 to-red-500 border-t-2 border-red-500 text-white hover:bg-red-700 focus-visible:ring-red-300"
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
