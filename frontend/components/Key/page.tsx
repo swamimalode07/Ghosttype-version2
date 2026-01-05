@@ -20,11 +20,13 @@ const Key: React.FC<KeyProps> = ({ label, variant = "normal", onClick }) => {
     <div
       className={`
         ${widthMap[variant]}
-        h-13
+        h-14
         rounded-sm
         bg-gradient-to-b from-[#5C5C5C] to-[#171717]
-        p-[1px]
-        active:translate-x-0.5 active:translate-y-0.5
+        p-[0.5px]
+        active:scale-95
+        cursor-pointer
+        duration-200
       `}
     >
       <button
