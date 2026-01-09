@@ -234,3 +234,12 @@ def save_results(data: RaceResult):
         "loser_accuracy": data.loser_accuracy
     }).execute()
     return {"status": "saved", "data": result.data}
+
+
+@app.get("/results/{room_code}")
+def get_results(room_code: str):
+    # Return the latest saved result for a room (most recent insert)
+    db = supabase.table("race_results").select("*").eq("room_code", room_code).order("id", desc=True).limit(1).execute()
+    if db.data:
+        return {"status": "ok", "result": db.data[0]}
+    return {"status": "not_found", "result": None}
