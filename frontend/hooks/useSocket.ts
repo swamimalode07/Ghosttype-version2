@@ -9,7 +9,6 @@ export const useSocket = (roomCode: string, username: string) => {
   const wsRef = useRef<WebSocket | null>(null);
   const messageHandlersRef = useRef<Map<string, Function[]>>(new Map());
 
-  // Connect to WebSocket
   useEffect(() => {
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
     const wsUrl = `${protocol}//localhost:8000/ws/${roomCode}`;
@@ -18,7 +17,6 @@ export const useSocket = (roomCode: string, username: string) => {
 
     ws.onopen = () => {
       wsRef.current = ws;
-      // Send join event
       send({
         type: "join",
         username: username,
@@ -50,21 +48,18 @@ export const useSocket = (roomCode: string, username: string) => {
     };
   }, [roomCode, username]);
 
-  // Send message via WebSocket
   const send = useCallback((message: SocketMessage) => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify(message));
     }
   }, []);
 
-  // Subscribe to message type
   const on = useCallback((type: string, handler: (data: any) => void) => {
     if (!messageHandlersRef.current.has(type)) {
       messageHandlersRef.current.set(type, []);
     }
     messageHandlersRef.current.get(type)!.push(handler);
 
-    // Return unsubscribe function
     return () => {
       const handlers = messageHandlersRef.current.get(type) || [];
       const index = handlers.indexOf(handler);

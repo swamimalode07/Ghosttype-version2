@@ -12,15 +12,15 @@ export default function Home() {
   return (
    <>
     <div className="bg-background text-foreground max-w-6xl mx-auto border-x border-[#565656] border-dashed h-screen overflow-hidden">
-      <div className="flex justify-between px-10 py-4 border-b border-[#565656] border-dashed h-16">
+      <div className="flex justify-between px-10 py-4 border-b border-[#565656] border-dashed ">
 
     <div className="flex gap-2">
-      <Image src="/assets/image.png" alt="Logo" width={40} height={40} className="bg-white rounded-sm "/>
+      <Image src="/assets/image.png" alt="Logo" width={30} height={30} className="bg-white rounded-sm "/>
     <div className="text-xl font-semibold">Ghosttype</div> 
     </div>
   </div>
 
-  <div className="grid grid-cols-8 h-[calc(100vh-1rem)]">
+  <div className="grid grid-cols-8 h-[calc(100vh-150px)]">
 
     <div className="col-span-5 flex items-center">
       <div className="flex flex-col gap-6 px-10">
@@ -42,7 +42,7 @@ export default function Home() {
     <div className="col-span-3 flex items-center justify-center">
       <Keyboard/>
     </div>
-    <div className="flex flex-row w-full col-span-8 px-10 gap-6 border-t border-dashed border-[#565656]">
+    {/* <div className="flex flex-row w-full col-span-8 px-10 gap-6 border-t border-dashed border-[#565656]">
       <div className="flex flex-col gap-2 border-r border-dashed border-[#565656] pt-4 last:border-r-0">
         <div className="grid grid-cols-10 ">
            <div className="col-span-1 pt-1">
@@ -77,7 +77,7 @@ export default function Home() {
         </div>
         
       </div>
-    </div>
+    </div> */}
   </div>
 </div>
    </>
